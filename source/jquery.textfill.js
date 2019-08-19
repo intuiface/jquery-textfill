@@ -252,24 +252,56 @@
 				// We need to measure with nowrap otherwise wrapping occurs and the measurement is wrong
       			ourText.css('white-space', 'nowrap' );
 			} else {
-				fontSizeHeight = _sizing(
-					'Height', ourText,
-					$.fn.height, maxHeight,
-					maxHeight, maxWidth,
-					minFontPixels, maxFontPixels
-				);
+                if(Opts.innerTag === "textarea") {
+                    // To handle Textarea elements, we need to make it update its size before we do our measurement thing
+					// No arrow function, we need it to be call this way : forceResizeElement.call(element), "this" will target "element" parameter
+					function forceResizeElement() {
+                        this.css('height', '1px');
+                        this.css('height', this[0].scrollHeight+"px");
+                        return $.fn.height.call(this);
+                    }
+                    fontSizeHeight = _sizing(
+                        'Height', ourText,
+                        forceResizeElement, maxHeight,
+                        maxHeight, maxWidth,
+                        minFontPixels, maxFontPixels
+                    );
+                } else {
+                    fontSizeHeight = _sizing(
+                        'Height', ourText,
+                        $.fn.height, maxHeight,
+                        maxHeight, maxWidth,
+                        minFontPixels, maxFontPixels
+                    );
+                }
 			}
 
 			// 2. Calculate which `font-size` would
 			//    be best for the Width
 			var fontSizeWidth = undefined;
 
-			fontSizeWidth = _sizing(
-				'Width', ourText,
-				$.fn.width, maxWidth,
-				maxHeight, maxWidth,
-				minFontPixels, maxFontPixels
-			);
+			if(Opts.innerTag === "textarea") {
+				// To handle Textarea elements, we need to make it update its size before we do our measurement thing
+				// No arrow function, we need it to be call this way : forceResizeElement.call(element), "this" will target "element" parameter
+				function forceResizeElement() {
+					this.css('width', '1px');
+					this.css('width', this[0].scrollWidth+"px");
+					return $.fn.width.call(this);
+				}
+				fontSizeWidth = _sizing(
+					'Width', ourText,
+					forceResizeElement, maxWidth,
+					maxHeight, maxWidth,
+					minFontPixels, maxFontPixels
+				);
+			} else {
+				fontSizeWidth = _sizing(
+					'Width', ourText,
+					$.fn.width, maxWidth,
+					maxHeight, maxWidth,
+					minFontPixels, maxFontPixels
+				);
+			}
 
 			// 3. Actually resize the text!
 
