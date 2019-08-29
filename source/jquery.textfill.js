@@ -254,15 +254,15 @@
 			} else {
                 if(Opts.innerTag === "textarea") {
                     // To handle Textarea elements, we need to make it update its size before we do our measurement thing
-					// No arrow function, we need it to be call this way : forceResizeElement.call(element), "this" will target "element" parameter
-					function forceResizeElement() {
-                        this.css('height', '1px');
+					// No arrow function, we need it to be call this way : forceHeightResizeElement.call(element), "this" will target "element" parameter
+					function forceHeightResizeElement() {
+						this.css('height', '1px');
                         this.css('height', this[0].scrollHeight+"px");
                         return $.fn.height.call(this);
                     }
                     fontSizeHeight = _sizing(
                         'Height', ourText,
-                        forceResizeElement, maxHeight,
+                        forceHeightResizeElement, maxHeight,
                         maxHeight, maxWidth,
                         minFontPixels, maxFontPixels
                     );
@@ -282,15 +282,15 @@
 
 			if(Opts.innerTag === "textarea") {
 				// To handle Textarea elements, we need to make it update its size before we do our measurement thing
-				// No arrow function, we need it to be call this way : forceResizeElement.call(element), "this" will target "element" parameter
-				function forceResizeElement() {
+				// No arrow function, we need it to be call this way : forceWidthResizeElement.call(element), "this" will target "element" parameter
+				function forceWidthResizeElement() {
 					this.css('width', '1px');
 					this.css('width', this[0].scrollWidth+"px");
 					return $.fn.width.call(this);
 				}
 				fontSizeWidth = _sizing(
 					'Width', ourText,
-					forceResizeElement, maxWidth,
+					forceWidthResizeElement, maxWidth,
 					maxHeight, maxWidth,
 					minFontPixels, maxFontPixels
 				);
