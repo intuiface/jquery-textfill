@@ -42,6 +42,7 @@ Remember, **container** means the _parent_ element, while **child** is the
 element that will _resize_. On the example above, the parent was the `div` and the
 child was the `span`.
 
+
 | Name              | Description | Default Value |
 | ----------------- | ----------- | ------------- |
 | `minFontPixels`   | Minimal font size (in pixels). The text will shrink up to this value. | 4 |
